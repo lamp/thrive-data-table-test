@@ -7,7 +7,7 @@ import { dataSource , createRandomUser } from 'src/dataSource'
 
 // Populate the fake data source with some initial data
 // This would normally come from a server
-const db = Array.from({ length: 500 }, () => createRandomUser())
+const db = Array.from({ length: 500 }, createRandomUser)
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

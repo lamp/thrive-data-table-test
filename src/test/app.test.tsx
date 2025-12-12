@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "src/App";
+import { formatDSR, formatFullName } from "src/helpers";
 import { createRandomUser } from "src/dataSource";
+
 
 const fakeUser = createRandomUser();
 const fakeDataSource = ({ startRow, endRow, successCallback }: any) => {
@@ -45,5 +47,20 @@ describe("AG Grid component rendering", () => {
 		render(<App dataSource={paginatedDataSource} />);
 		// Verify that the first page of data is rendered
 		expect(await screen.findByText(/@/)).toBeInTheDocument(); // Check for email presence
+	});
+
+	// Ideally these two tests would be in a separate file, but included here for simplicity
+	test('formatFullName function works correctly', () => {
+		const mockData = { first_name: 'John', last_name: 'Doe' };
+		const result = formatFullName({ data: mockData });
+		expect(result).toBe('John Doe');
+	});
+
+	test('formatDSR function works correctly', () => {
+		const pastDate = new Date();
+		pastDate.setDate(pastDate.getDate() - 5); // 5 days ago
+		const mockData = { registered_at: pastDate.toISOString() };
+		const result = formatDSR({ data: mockData });
+		expect(result).toContain('5 days ago');
 	});
 });

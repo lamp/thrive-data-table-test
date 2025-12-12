@@ -21,14 +21,11 @@ export function createRandomUser(): User {
   };
 }
 
-async function fetchData(db, { startRow, endRow, successCallback }: IGetRowsParams) {
+export async function dataSource(db, { startRow, endRow, successCallback }: IGetRowsParams) {
 		await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
 
 		// Simulate server-side pagination
 		const rowsThisPage = db.slice(startRow, endRow);
 		successCallback(rowsThisPage, 500);
 }
-
-const data = Array.from({ length: 500 }, () => createRandomUser());
-export const dataSource = fetchData.bind()
 

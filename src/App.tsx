@@ -1,8 +1,8 @@
 import { useState, useMemo, useCallback } from 'react'
 import { AllCommunityModule, ModuleRegistry, InfiniteRowModelModule, ValidationModule, ClientSideRowModelModule, ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { formatDistanceToNowStrict } from 'date-fns';
 import { GridReadyEvent, IGetRowsParams } from 'ag-grid-community/types/events';
+import { formatFullName, formatDSR } from 'src/helpers';
 
 export type IRow = {
 	id: string;
@@ -32,15 +32,14 @@ function App({ dataSource })  {
 		{ field: 'email', headerName: 'Email', editable: true },
 		{ field: 'city' },
 		{ field: 'registered_at', headerName: 'Registered Date', editable: true, filter: 'agDateColumnFilter' },
-		{ field: 'full_name', headerName: 'Full Name', valueGetter: (params) => { if (params.data) return `${params.data.first_name} ${params.data.last_name}` } },
-		{ field: 'dsr', headerName: 'DSR', valueGetter: (params) => { if (params.data) return formatDistanceToNowStrict(new Date(params.data.registered_at), { addSuffix: true, unit: 'day' }) } },
+		{ field: 'full_name', headerName: 'Full Name', valueFormatter: formatFullName },
+		{ field: 'dsr', headerName: 'DSR', valueFormatter: formatDSR },
 	]);
 
 	const onGridReady = useCallback((params: GridReadyEvent) => {
 		const tableDataSource = {
 			rowCount: 500,
 			getRows: async function(rowParams: IGetRowsParams) {
-				console.log('Requesting rows: ', rowParams.startRow, 'to', rowParams.endRow);
 				await dataSource(rowParams)
 			}
 		};
