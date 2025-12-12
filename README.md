@@ -22,7 +22,7 @@ npm run test
 - Lack of tests of the interactivity of the table, I would add tests to verify that sorting, filtering and pagination are working as expected.
 - No idea if the table is in any way responsive, I would add media queries and test the table in different screen sizes to ensure it is usable in all devices.
 - No performance optimizations, for large datasets I would consider using virtualization to improve performance.
-- No error handling, in a rea application I would add error handling to the data fetching and display appropriate messages to that end
+- No error handling, in a real application I would add error handling to the data fetching and display appropriate messages to that end
 - No accessibility features, I would ensure that the table is accessible to all users by adding appropriate ARIA attributes and ensuring keyboard navigation works as expected.
 
 ## Architecture Decisions
